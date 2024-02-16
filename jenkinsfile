@@ -11,12 +11,19 @@ pipeline {
         stage('Setup') {
             steps {
                 sh "echo 'Creating network'"
-                sh "docker create network || true"
+                sh "docker network create my-network || true"
             }
         }
         stage('Docker build') {
             steps {
-                sh 'docker build -t flask-app'
+                sh 'docker build -t flask-app -f Dockerfile .'
+                sh 'docker build -t nginx -f Dockerfile.nginx .'
+            }
+        }
+        stage('Docker run') {
+            steps {
+                sh 'docker run -d --name nginx -p 80:80 --network my-network nginx'
+                sh 'docker run -d --name flask-app --network my-network flask-app'
             }
         }
     }
