@@ -5,7 +5,7 @@ FROM python:latest
 COPY . . 
 
 # Install pip dependencies from requirements 
-RUN pip install --upgrade pip RUN pip install -r requirements.txt 
+RUN pip install -r requirements.txt 
 
 # Set YOUR_NAME environment variable 
 ENV YOUR_NAME QA 
