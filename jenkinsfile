@@ -5,8 +5,7 @@ pipeline {
             steps {
                 sh "echo 'Cleaning up'"
                 sh 'docker rm -f $(docker ps -aq) || true' 
-                sh 'docker rmi -f $(docker images) || true'
-            }
+           }
         }
         stage('Setup') {
             steps {
