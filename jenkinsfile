@@ -4,7 +4,7 @@ pipeline {
         stage('Clean Up') {
             steps {
                 sh "echo 'Cleaning up'"
-                sh 'docker rm -f $(docker ps -aq) || true' 
+                sh "docker rm -f $(docker ps -aq) || true" 
            }
         }
         stage('Setup') {
