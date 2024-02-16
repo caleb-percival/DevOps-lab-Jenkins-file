@@ -1,14 +1,22 @@
 pipeline {
     agent any
     stages {
-        stage('First Stage') {
+        stage('Clean Up') {
             steps {
-                sh 'ls'
+                sh "echo 'Cleaning up'"
+                sh 'docker rm -f $(docker ps -aq) || true' 
+                sh 'docker rmi -f $(docker images) || true'
             }
         }
-        stage('Second Stage') {
+        stage('Setup') {
             steps {
-                sh 'pwd'
+                sh "echo 'Creating network'"
+                sh "docker create network || true"
+            }
+        }
+        stage('Docker build') {
+            steps {
+                sh 'docker build -t flask-app'
             }
         }
     }
